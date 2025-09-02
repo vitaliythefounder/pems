@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Idea, Project } from '../types';
 import { ideasAPI, usersAPI } from '../services/api';
-import { X, Calendar, User, Clock } from 'lucide-react';
+import { X, Calendar, User } from 'lucide-react';
 
 interface ConvertToTaskModalProps {
   idea: Idea;

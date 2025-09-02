@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Brain } from 'lucide-react';
-import Header from './Header';
+
 import Sidebar from './Sidebar';
 import Dashboard from './Dashboard';
 import { ideasAPI, projectsAPI, tasksAPI } from '../services/api';

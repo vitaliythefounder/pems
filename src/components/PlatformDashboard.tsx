@@ -5,13 +5,10 @@ import {
   User, 
   Settings, 
   LogOut, 
-  Plus,
   CheckCircle,
   XCircle,
   Star,
-  Users,
-  Briefcase,
-  Home
+  Briefcase
 } from 'lucide-react';
 
 interface MicroApp {

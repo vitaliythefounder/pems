@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Idea, Project, Task, AppState } from '../types';
+import { Idea, Project, Task } from '../types';
 import { 
   convertApiIdea, 
   convertApiProject, 

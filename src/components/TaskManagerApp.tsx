@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckSquare, Plus, Calendar, Clock, User, Filter, Search, Lightbulb, RefreshCw } from 'lucide-react';
+import { ArrowLeft, CheckSquare, Plus, Calendar, Clock, User, Search, Lightbulb, RefreshCw } from 'lucide-react';
 import { tasksAPI } from '../services/api';
 
 interface Task {
