@@ -133,6 +133,30 @@ app.get('/api/platform/test', (req, res) => {
   });
 });
 
+// Test micro apps endpoint
+app.get('/api/test/micro-apps', async (req, res) => {
+  try {
+    const MicroApp = require('./models/MicroApp');
+    const apps = await MicroApp.find({});
+    res.json({
+      message: 'Micro apps test',
+      count: apps.length,
+      apps: apps.map(app => ({
+        appId: app.appId,
+        displayName: app.displayName,
+        isActive: app.isActive
+      })),
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to fetch micro apps',
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 // Register routes
 app.use('/api/platform/auth', platformAuthRoutes);
 app.use('/api/platform/apps', microAppRoutes);
