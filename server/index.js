@@ -69,7 +69,11 @@ const createDefaultMicroApps = async () => {
           { name: 'Progress Tracking', description: 'Monitor project and task completion', isEnabled: true }
         ],
         settings: { allowSharing: true, allowCollaboration: true, maxUsers: 10, storageLimit: 100 },
-        permissions: ['read', 'write', 'admin']
+        permissions: [
+          { name: 'read', description: 'View app content', required: true },
+          { name: 'write', description: 'Create and edit content', required: true },
+          { name: 'admin', description: 'Manage app settings', required: false }
+        ]
       });
       await pimsApp.save();
       console.log('✅ PIMS micro app created');
@@ -101,7 +105,11 @@ const createDefaultMicroApps = async () => {
           { name: 'Progress Monitoring', description: 'Monitor task completion', isEnabled: true }
         ],
         settings: { allowSharing: true, allowCollaboration: true, maxUsers: 10, storageLimit: 100 },
-        permissions: ['read', 'write', 'admin']
+        permissions: [
+          { name: 'read', description: 'View app content', required: true },
+          { name: 'write', description: 'Create and edit content', required: true },
+          { name: 'admin', description: 'Manage app settings', required: false }
+        ]
       });
       await taskManagerApp.save();
       console.log('✅ Task Manager micro app created');
@@ -185,7 +193,11 @@ app.post('/api/create-micro-apps', async (req, res) => {
         { name: 'Task Conversion', description: 'Convert ideas to tasks', isEnabled: true }
       ],
       settings: { allowSharing: true, allowCollaboration: true },
-      permissions: ['read', 'write', 'admin']
+      permissions: [
+        { name: 'read', description: 'View app content', required: true },
+        { name: 'write', description: 'Create and edit content', required: true },
+        { name: 'admin', description: 'Manage app settings', required: false }
+      ]
     });
     await pimsApp.save();
     console.log('✅ PIMS app created manually');
@@ -212,7 +224,11 @@ app.post('/api/create-micro-apps', async (req, res) => {
         { name: 'Due Date Tracking', description: 'Track deadlines', isEnabled: true }
       ],
       settings: { allowSharing: true, allowCollaboration: true },
-      permissions: ['read', 'write', 'admin']
+      permissions: [
+        { name: 'read', description: 'View app content', required: true },
+        { name: 'write', description: 'Create and edit content', required: true },
+        { name: 'admin', description: 'Manage app settings', required: false }
+      ]
     });
     await taskManagerApp.save();
     console.log('✅ Task Manager app created manually');
