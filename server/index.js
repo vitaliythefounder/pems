@@ -20,6 +20,9 @@ const microAppRoutes = require('./routes/micro-apps');
 
 const app = express();
 
+// Trust proxy for Railway deployment
+app.set('trust proxy', 1);
+
 // Use PORT from environment variable or default to 5001
 const PORT = process.env.PORT || 5001;
 
