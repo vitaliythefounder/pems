@@ -157,6 +157,81 @@ app.get('/api/test/micro-apps', async (req, res) => {
   }
 });
 
+// Manual micro app creation endpoint
+app.post('/api/create-micro-apps', async (req, res) => {
+  try {
+    console.log('🔧 Manually creating micro apps...');
+    const MicroApp = require('./models/MicroApp');
+    
+    // Create PIMS app
+    const pimsApp = new MicroApp({
+      appId: 'pims',
+      name: 'pims',
+      displayName: 'Personal Ideas Management',
+      description: 'Organize and manage your ideas, projects, and tasks in one place.',
+      version: '1.0.0',
+      category: 'personal',
+      tags: ['productivity', 'ideas', 'projects', 'tasks'],
+      icon: '💡',
+      color: '#3B82F6',
+      route: '/apps/pims',
+      isActive: true,
+      isPublic: true,
+      subscriptionRequired: false,
+      requiredPlan: 'free',
+      features: [
+        { name: 'Idea Management', description: 'Create and organize ideas', isEnabled: true },
+        { name: 'Project Organization', description: 'Group ideas into projects', isEnabled: true },
+        { name: 'Task Conversion', description: 'Convert ideas to tasks', isEnabled: true }
+      ],
+      settings: { allowSharing: true, allowCollaboration: true },
+      permissions: ['read', 'write', 'admin']
+    });
+    await pimsApp.save();
+    console.log('✅ PIMS app created manually');
+
+    // Create Task Manager app
+    const taskManagerApp = new MicroApp({
+      appId: 'task-manager',
+      name: 'task-manager',
+      displayName: 'Task Manager',
+      description: 'Manage and organize your tasks with priorities and due dates.',
+      version: '1.0.0',
+      category: 'personal',
+      tags: ['productivity', 'tasks', 'organization'],
+      icon: '✅',
+      color: '#10B981',
+      route: '/apps/task-manager',
+      isActive: true,
+      isPublic: true,
+      subscriptionRequired: false,
+      requiredPlan: 'free',
+      features: [
+        { name: 'Task Creation', description: 'Create and organize tasks', isEnabled: true },
+        { name: 'Priority Management', description: 'Set task priorities', isEnabled: true },
+        { name: 'Due Date Tracking', description: 'Track deadlines', isEnabled: true }
+      ],
+      settings: { allowSharing: true, allowCollaboration: true },
+      permissions: ['read', 'write', 'admin']
+    });
+    await taskManagerApp.save();
+    console.log('✅ Task Manager app created manually');
+
+    res.json({
+      message: 'Micro apps created successfully',
+      count: 2,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('❌ Manual creation failed:', error);
+    res.status(500).json({
+      error: 'Failed to create micro apps',
+      message: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 // Register routes
 app.use('/api/platform/auth', platformAuthRoutes);
 app.use('/api/platform/apps', microAppRoutes);
