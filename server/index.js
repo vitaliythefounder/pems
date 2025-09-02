@@ -37,6 +37,85 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pims')
 .then(() => console.log('✅ Connected to MongoDB'))
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
+// Create default micro apps if they don't exist
+const createDefaultMicroApps = async () => {
+  try {
+    const MicroApp = require('./models/MicroApp');
+    
+    // Check if PIMS app exists
+    let pimsApp = await MicroApp.findOne({ appId: 'pims' });
+    if (!pimsApp) {
+      pimsApp = new MicroApp({
+        appId: 'pims',
+        name: 'pims',
+        displayName: 'Personal Ideas Management',
+        description: 'Organize and manage your ideas, projects, and tasks in one place. Convert ideas to actionable tasks and collaborate with team members.',
+        version: '1.0.0',
+        category: 'personal',
+        tags: ['productivity', 'ideas', 'projects', 'tasks', 'collaboration'],
+        icon: '💡',
+        color: '#3B82F6',
+        route: '/apps/pims',
+        isActive: true,
+        isPublic: true,
+        isBeta: false,
+        subscriptionRequired: false,
+        requiredPlan: 'free',
+        features: [
+          { name: 'Idea Management', description: 'Create, organize, and categorize ideas', isEnabled: true },
+          { name: 'Project Organization', description: 'Group ideas into projects and track progress', isEnabled: true },
+          { name: 'Task Conversion', description: 'Convert ideas into actionable tasks', isEnabled: true },
+          { name: 'Team Collaboration', description: 'Invite team members and assign tasks', isEnabled: true },
+          { name: 'Progress Tracking', description: 'Monitor project and task completion', isEnabled: true }
+        ],
+        settings: { allowSharing: true, allowCollaboration: true, maxUsers: 10, storageLimit: 100 },
+        permissions: ['read', 'write', 'admin']
+      });
+      await pimsApp.save();
+      console.log('✅ PIMS micro app created');
+    }
+
+    // Check if Task Manager app exists
+    let taskManagerApp = await MicroApp.findOne({ appId: 'task-manager' });
+    if (!taskManagerApp) {
+      taskManagerApp = new MicroApp({
+        appId: 'task-manager',
+        name: 'task-manager',
+        displayName: 'Task Manager',
+        description: 'Manage and organize your tasks with priority levels, due dates, and progress tracking.',
+        version: '1.0.0',
+        category: 'personal',
+        tags: ['productivity', 'tasks', 'organization', 'time-management'],
+        icon: '✅',
+        color: '#10B981',
+        route: '/apps/task-manager',
+        isActive: true,
+        isPublic: true,
+        isBeta: false,
+        subscriptionRequired: false,
+        requiredPlan: 'free',
+        features: [
+          { name: 'Task Creation', description: 'Create and organize tasks', isEnabled: true },
+          { name: 'Priority Management', description: 'Set and manage task priorities', isEnabled: true },
+          { name: 'Due Date Tracking', description: 'Track task deadlines', isEnabled: true },
+          { name: 'Progress Monitoring', description: 'Monitor task completion', isEnabled: true }
+        ],
+        settings: { allowSharing: true, allowCollaboration: true, maxUsers: 10, storageLimit: 100 },
+        permissions: ['read', 'write', 'admin']
+      });
+      await taskManagerApp.save();
+      console.log('✅ Task Manager micro app created');
+    }
+
+    console.log('✅ Default micro apps ready');
+  } catch (error) {
+    console.error('❌ Error creating default micro apps:', error);
+  }
+};
+
+// Create default apps after database connection
+setTimeout(createDefaultMicroApps, 1000);
+
 // Simple health check
 app.get('/api/health', (req, res) => {
   res.json({ 
