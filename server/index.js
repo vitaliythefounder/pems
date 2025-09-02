@@ -68,6 +68,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Debug route to test platform routes
+app.get('/api/debug/routes', (req, res) => {
+  res.json({
+    message: 'Debug routes working',
+    platformAuth: 'Should be at /api/platform/auth/*',
+    microApps: 'Should be at /api/platform/apps/*',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
