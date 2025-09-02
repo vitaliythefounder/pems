@@ -76,7 +76,7 @@ const PlatformDashboard: React.FC<PlatformDashboardProps> = ({
     const loadApps = async () => {
       try {
         const token = localStorage.getItem('platformToken');
-        const response = await fetch('http://localhost:5001/api/platform/apps', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/platform/apps`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -102,7 +102,7 @@ const PlatformDashboard: React.FC<PlatformDashboardProps> = ({
   const activateApp = async (appId: string) => {
     try {
       const token = localStorage.getItem('platformToken');
-      const response = await fetch(`http://localhost:5001/api/platform/apps/${appId}/activate`, {
+              const response = await fetch(`${process.env.REACT_APP_API_URL}/platform/apps/${appId}/activate`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -130,7 +130,7 @@ const PlatformDashboard: React.FC<PlatformDashboardProps> = ({
   const deactivateApp = async (appId: string) => {
     try {
       const token = localStorage.getItem('platformToken');
-      const response = await fetch(`http://localhost:5001/api/platform/apps/${appId}/deactivate`, {
+              const response = await fetch(`${process.env.REACT_APP_API_URL}/platform/apps/${appId}/deactivate`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
