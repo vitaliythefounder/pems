@@ -93,6 +93,14 @@ app.get('/api/platform/test', (req, res) => {
   });
 });
 
+// Test platform auth route directly
+app.get('/api/platform/auth/test', (req, res) => {
+  res.json({
+    message: 'Platform auth test route working',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
