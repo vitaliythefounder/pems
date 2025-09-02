@@ -8,6 +8,14 @@ const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
+// Test route to verify router is working
+router.get('/test', (req, res) => {
+  res.json({
+    message: 'Platform auth router is working',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Generate JWT token
 const generateToken = (userId) => {
   return jwt.sign(

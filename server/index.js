@@ -101,6 +101,41 @@ app.get('/api/platform/auth/test', (req, res) => {
   });
 });
 
+// Debug: List all registered routes
+app.get('/api/debug/routes-list', (req, res) => {
+  const routes = [];
+  
+  // Get all registered routes
+  app._router.stack.forEach(middleware => {
+    if (middleware.route) {
+      // Routes registered directly on app
+      routes.push({
+        path: middleware.route.path,
+        methods: Object.keys(middleware.route.methods),
+        type: 'direct'
+      });
+    } else if (middleware.name === 'router') {
+      // Router middleware
+      middleware.handle.stack.forEach(handler => {
+        if (handler.route) {
+          routes.push({
+            path: middleware.regexp.source.replace(/\\\//g, '/').replace(/\\\?/g, '?').replace(/\\\*/g, '*'),
+            methods: Object.keys(handler.route.methods),
+            type: 'router',
+            basePath: middleware.regexp.source
+          });
+        }
+      });
+    }
+  });
+  
+  res.json({
+    message: 'All registered routes',
+    routes: routes,
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
