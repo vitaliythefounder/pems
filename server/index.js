@@ -47,8 +47,15 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pims')
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Platform routes
+console.log('🔧 Registering platform routes...');
+console.log('📁 Platform auth routes file:', typeof platformAuthRoutes);
+console.log('📁 Micro apps routes file:', typeof microAppRoutes);
+
 app.use('/api/platform/auth', platformAuthRoutes);
+console.log('✅ Platform auth routes registered at /api/platform/auth');
+
 app.use('/api/platform/apps', microAppRoutes);
+console.log('✅ Micro apps routes registered at /api/platform/apps');
 
 // Legacy PIMS routes (for backward compatibility)
 app.use('/api/auth', authRoutes);
@@ -74,6 +81,14 @@ app.get('/api/debug/routes', (req, res) => {
     message: 'Debug routes working',
     platformAuth: 'Should be at /api/platform/auth/*',
     microApps: 'Should be at /api/platform/apps/*',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Test platform route directly
+app.get('/api/platform/test', (req, res) => {
+  res.json({
+    message: 'Platform test route working',
     timestamp: new Date().toISOString()
   });
 });
